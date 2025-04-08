@@ -1,4 +1,4 @@
-from sqlalchemy import text, ForeignKey
+from sqlalchemy import text, ForeignKey, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.dao.database import Base, str_uniq
 
@@ -15,6 +15,7 @@ class User(Base):
     phone_number: Mapped[str_uniq]
     first_name: Mapped[str]
     last_name: Mapped[str]
+    balance: Mapped[int] = mapped_column(default=1)
     email: Mapped[str_uniq]
     password: Mapped[str]
     role_id: Mapped[int] = mapped_column(ForeignKey('roles.id'), default=3, server_default=text("3"))

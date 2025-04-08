@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Все пользователи</title>
+</head>
+<body>
+    <h1>Список пользователей</h1>
+    <div>
+        {% for user in users %}
+        <div>
+            <h2>ID: {{ user.id }}</h2>
+            <p>Полное имя: {{ user.first_name }} {{ user.last_name }}</p>
+            <p>Email: {{ user.email }}</p>
+            <p>Balance: {{ user.balance }}</p>
+            <!-- Добавьте другие атрибуты по вашему усмотрению -->
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
