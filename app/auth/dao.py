@@ -1,5 +1,5 @@
 from app.dao.base import BaseDAO
-from app.auth.models import User, Role
+from app.auth.models import User, Role, Invoice
 
 
 class UsersDAO(BaseDAO):
@@ -8,3 +8,7 @@ class UsersDAO(BaseDAO):
 
 class RoleDAO(BaseDAO):
     model = Role
+
+
+class InvoiceDAO(BaseDAO):
+    model = Invoice

@@ -10,12 +10,13 @@ client = TestClient(appl)
 
 def test_read_main():
     """ Тестирование главной страницы """
+    
     response = client.get("/")
     assert response.status_code == 200
     assert response.json() == {
-                                 "message": "Добро пожаловать! Проект создан для сообщества 'Легкий путь в Python'.",
-            "community": "https://t.me/PythonPathMaster",
-            "author": "Яковенко Алексей"
+                                "message": "Добро пожаловать! Проект создан для сообщества 'Легкий путь в Python'.",
+                                "community": "https://t.me/PythonPathMaster",
+                                "author": "Яковенко Алексей"
                                 }
 
 
@@ -66,5 +67,3 @@ def test_all_users():
     
     assert response.status_code == 200
     assert len(response.json()) >= 1
-
-

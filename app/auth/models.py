@@ -1,6 +1,7 @@
-from sqlalchemy import text, ForeignKey, Integer
+from sqlalchemy import text, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.dao.database import Base, str_uniq
+from app.dao.sql_enums import TypeEnum
 
 
 class Role(Base):
@@ -21,5 +22,15 @@ class User(Base):
     role_id: Mapped[int] = mapped_column(ForeignKey('roles.id'), default=3, server_default=text("3"))
     role: Mapped["Role"] = relationship("Role", back_populates="users", lazy="joined")
 
+    invoices: Mapped[list['Invoice']] = relationship(back_populates="user", cascade="all, delete") #"Invoice", 
+
     def __repr__(self):
         return f"{self.__class__.__name__}(id={self.id})"
+
+
+class Invoice(Base):
+    user_id: Mapped[int] = mapped_column(ForeignKey('users.id'), default=11, server_default=text("11"))
+    user: Mapped["User"] = relationship("User", back_populates="invoices", lazy="joined")
+    title: Mapped[str]
+    amount: Mapped[float] = mapped_column(nullable=False)
+    type: Mapped[TypeEnum]

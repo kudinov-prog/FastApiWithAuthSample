@@ -2,11 +2,12 @@ from contextlib import asynccontextmanager
 from typing import AsyncGenerator
 from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
+#from fastapi.staticfiles import StaticFiles
 from loguru import logger
 
 from app.auth.router import router as router_auth
 from app.pages.router import router as router_pages
+from app.dao.router import router as router_invoices
 
 
 @asynccontextmanager
@@ -65,15 +66,15 @@ def register_routers(app: FastAPI) -> None:
     @root_router.get("/", tags=["root"])
     def home_page():
         return {
-            "message": "Добро пожаловать! Проект создан для сообщества 'Легкий путь в Python'.",
-            "community": "https://t.me/PythonPathMaster",
-            "author": "Яковенко Алексей"
+            "message": "Добро пожаловать! Это тестовый проект.",
+            "author": "Кудинов Михаил"
         }
 
     # Подключение роутеров
     app.include_router(root_router, tags=["root"])
-    app.include_router(router_auth, prefix='/auth', tags=['Auth'])
+    app.include_router(router_auth, prefix='/auth', tags=['Аутентификация'])
     app.include_router(router_pages)
+    app.include_router(router_invoices)
 
 
 # Создание экземпляра приложения

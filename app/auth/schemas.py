@@ -2,6 +2,7 @@ import re
 from typing import Self
 from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator, model_validator, computed_field
 from app.auth.utils import get_password_hash
+from app.dao.sql_enums import TypeEnum
 
 
 class EmailModel(BaseModel):
@@ -47,6 +48,13 @@ class RoleModel(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
+class InvoiceModel(BaseModel):
+    """ Надо тестировать """
+    id: int =  Field(description="Идентификатор платежа")
+    title: str = Field(description="Название платежа")
+    model_config = ConfigDict(from_attributes=True)
+
+
 class SUserInfo(UserBase):
     id: int = Field(description="Идентификатор пользователя")
     role: RoleModel = Field(exclude=True)
@@ -58,3 +66,18 @@ class SUserInfo(UserBase):
     @computed_field
     def role_id(self) -> int:
         return self.role.id
+
+    invoices: list['SInvoiceInfo']
+
+
+class SInvoiceCreate(BaseModel):
+    title: str = Field(max_length=30)
+    amount: float
+    type: TypeEnum
+
+
+class SInvoiceInfo(BaseModel):
+    user_id: int
+    title: str
+    amount: float
+    type: TypeEnum

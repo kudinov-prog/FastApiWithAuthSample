@@ -10,5 +10,3 @@ response = requests.get(
         cookies=cookies
         )
 print(response.json()['email'])
-#assert response.status_code == 200
-#assert response.json() == {'email': "user1@example.com"}
