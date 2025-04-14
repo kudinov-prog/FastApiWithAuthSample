@@ -1,5 +1,5 @@
 import re
-from typing import Self
+from typing import Self, List
 from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator, model_validator, computed_field
 from app.auth.utils import get_password_hash
 from app.dao.sql_enums import TypeEnum
@@ -67,7 +67,7 @@ class SUserInfo(UserBase):
     def role_id(self) -> int:
         return self.role.id
 
-    invoices: list['SInvoiceInfo']
+    #invoices: List['SInvoiceInfo']
 
 
 class SInvoiceCreate(BaseModel):

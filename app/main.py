@@ -8,6 +8,7 @@ from loguru import logger
 from app.auth.router import router as router_auth
 from app.pages.router import router as router_pages
 from app.dao.router import router as router_invoices
+from app.dao.router import router_rate
 
 
 @asynccontextmanager
@@ -75,6 +76,7 @@ def register_routers(app: FastAPI) -> None:
     app.include_router(router_auth, prefix='/auth', tags=['Аутентификация'])
     app.include_router(router_pages)
     app.include_router(router_invoices)
+    app.include_router(router_rate)
 
 
 # Создание экземпляра приложения

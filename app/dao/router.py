@@ -7,6 +7,7 @@ from app.auth.router import get_all_users
 from typing import List
 from app.auth.schemas import SInvoiceInfo, SInvoiceCreate
 from app.auth.dao import InvoiceDAO
+import requests
 
 from app.auth.schemas import SInvoiceInfo, SInvoiceCreate
 
@@ -36,3 +37,16 @@ async def register_invoice(invoice_data: SInvoiceCreate,
     await invoice_dao.add(values=SInvoiceCreate(**invoice_data_dict))
 
     return {'message': 'Invoice успешно добавлен!'}
+
+
+router_rate = APIRouter(prefix='/kurs', tags=['Курс валют'])
+
+@router_rate.get("/{currency_code}")
+def get_currency_rate(currency_code: str, user_data: User = Depends(get_current_admin_user)):
+    url = f"https://api.exchangerate-api.com/v4/latest/{currency_code.upper()}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        data =response.json()
+        return {"base_currency": data["base"], "date": data["date"], "rates_RUB": data["rates"]["RUB"]}
+    else:
+        return {"error": "Курсы валют в данное время недоступны"}
